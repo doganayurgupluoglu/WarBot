@@ -4,103 +4,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WarBot v0.8 | WarUniverse Automation</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <title>WarBot v0.8.1 | WarUniverse Automation Bot</title>
+    <meta name="description"
+        content="WarBot - En gelişmiş WarUniverse otomasyon botu. NPC kesme, kutu toplama, otomatik kaçış ve daha fazlası.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
+    <link rel="stylesheet" href="demo/styles.css">
     <style>
-        :root {
-            --bg-color: #0f1015;
-            --card-bg: rgba(255, 255, 255, 0.05);
-            --primary-blue: #3498db;
-            --primary-red: #e74c3c;
-            --accent-green: #2ecc71;
-            --text-main: #f5f6fa;
+        /* ===== PAGE LAYOUT ===== */
+        .page-container {
+            min-height: 100vh;
+            background: radial-gradient(ellipse at top, #1a1b22 0%, #0f1015 50%, #080809 100%);
+            padding: 20px;
         }
 
-        body {
-            background: radial-gradient(circle at top, #1b1d25 0%, #0f1015 100%);
-            color: var(--text-main);
-            font-family: 'Inter', sans-serif;
-            margin: 0;
-            line-height: 1.6;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-
-        header {
+        .page-header {
             text-align: center;
-            margin-bottom: 60px;
+            padding: 30px 20px;
+            margin-bottom: 20px;
         }
 
-        header h1 {
-            font-size: 3rem;
-            margin: 0;
-            background: linear-gradient(90deg, var(--primary-red), var(--primary-blue));
+        .page-header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #8b8d97, #3d8bff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
         }
 
-        .main-grid {
+        .page-header p {
+            color: #8b8d97;
+            font-size: 1.1rem;
+        }
+
+        /* ===== MAIN LAYOUT ===== */
+        .main-layout {
             display: grid;
-            grid-template-columns: 1fr 1.5fr 1fr;
-            gap: 25px;
-            align-items: stretch;
+            grid-template-columns: 420px 1fr;
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+            align-items: start;
         }
 
-        .card {
-            background: var(--card-bg);
-            backdrop-filter: blur(10px);
+        @media (max-width: 1100px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+                max-width: 500px;
+            }
+        }
+
+        /* ===== LEFT SIDE - BOT DEMO ===== */
+        .bot-demo-section {
+            position: sticky;
+            top: 20px;
+        }
+
+        .demo-container {
+            max-width: 420px;
+            margin: 0;
+        }
+
+        /* ===== RIGHT SIDE ===== */
+        .right-section {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        /* ===== VIDEO SECTION ===== */
+        .video-section {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 25px;
-            transition: transform 0.3s ease;
+            padding: 20px;
+            backdrop-filter: blur(10px);
         }
 
-        .card:hover {
-            transform: translateY(-5px);
-        }
-
-        .card h3 {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 1.4rem;
-            margin-top: 0;
-        }
-
-        .list-item {
-            list-style: none;
-            padding: 0;
-            margin: 20px 0;
-        }
-
-        .list-item li {
-            margin-bottom: 12px;
+        .video-section h2 {
+            font-size: 1.3rem;
+            margin-bottom: 16px;
+            color: #f5f6fa;
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        .list-item i {
-            font-size: 0.9rem;
+        .video-section h2 i {
+            color: #ff0000;
         }
 
-        /* Video Section */
-        .video-box {
+        .video-wrapper {
             position: relative;
             padding-bottom: 56.25%;
             height: 0;
-            border-radius: 15px;
+            border-radius: 12px;
             overflow: hidden;
-            border: 2px solid rgba(52, 152, 219, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.1);
         }
 
-        .video-box iframe {
+        .video-wrapper iframe {
             position: absolute;
             top: 0;
             left: 0;
@@ -108,103 +113,682 @@
             height: 100%;
         }
 
-        /* Button */
-        .cta-box {
-            text-align: center;
-            grid-column: 1 / -1;
-            margin-top: 40px;
-            padding: 40px;
-            border-radius: 20px;
-            background: linear-gradient(rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.05));
+        /* ===== FEATURES SECTION ===== */
+        .features-section {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
         }
 
-        .discord-btn {
-            display: inline-flex;
+        @media (max-width: 700px) {
+            .features-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 24px;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(61, 139, 255, 0.3);
+        }
+
+        .feature-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 16px;
+            display: flex;
             align-items: center;
-            gap: 15px;
-            background: #5865F2;
-            color: white;
-            padding: 18px 45px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: bold;
+            gap: 10px;
+        }
+
+        .feature-card h3 i {
             font-size: 1.3rem;
-            box-shadow: 0 10px 20px rgba(88, 101, 242, 0.3);
-            transition: all 0.3s ease;
         }
 
-        .discord-btn:hover {
-            background: #4752c4;
-            box-shadow: 0 15px 30px rgba(88, 101, 242, 0.5);
-            transform: scale(1.05);
+        .feature-card.security h3 {
+            color: #ff3d3d;
         }
 
-        .keywords {
-            margin-top: 60px;
-            text-align: center;
-            color: rgba(255, 255, 255, 0.3);
+        .feature-card.efficiency h3 {
+            color: #3d8bff;
+        }
+
+        .feature-card.automation h3 {
+            color: #00c853;
+        }
+
+        .feature-card.premium h3 {
+            color: #ffd700;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .feature-list li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 0;
+            font-size: 0.95rem;
+            color: #b8bac4;
+        }
+
+        .feature-list li i {
+            color: #00c853;
             font-size: 0.85rem;
         }
 
-        @media (max-width: 1024px) {
-            .main-grid {
+        /* ===== CTA SECTION ===== */
+        .cta-section {
+            background: linear-gradient(135deg, rgba(88, 101, 242, 0.15), rgba(255, 61, 61, 0.1));
+            border-radius: 16px;
+            border: 1px solid rgba(88, 101, 242, 0.3);
+            padding: 32px;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+            color: #f5f6fa;
+        }
+
+        .cta-section p {
+            color: #8b8d97;
+            margin-bottom: 24px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn-discord {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #5865F2;
+            color: white;
+            padding: 14px 32px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s;
+            box-shadow: 0 8px 24px rgba(88, 101, 242, 0.3);
+        }
+
+        .btn-discord:hover {
+            background: #4752c4;
+            transform: scale(1.05);
+            box-shadow: 0 12px 32px rgba(88, 101, 242, 0.4);
+        }
+
+        .btn-website {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: transparent;
+            color: #3d8bff;
+            padding: 14px 32px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            border: 2px solid #3d8bff;
+            transition: all 0.3s;
+        }
+
+        .btn-website:hover {
+            background: rgba(61, 139, 255, 0.1);
+            transform: scale(1.05);
+        }
+
+        /* ===== PRICING HINT ===== */
+        .pricing-hint {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        @media (max-width: 500px) {
+            .pricing-hint {
                 grid-template-columns: 1fr;
             }
+        }
+
+        .price-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            text-align: center;
+        }
+
+        .price-card.free {
+            border-color: rgba(139, 141, 151, 0.3);
+        }
+
+        .price-card.premium {
+            border-color: rgba(255, 215, 0, 0.3);
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.05), transparent);
+        }
+
+        .price-card h4 {
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
+
+        .price-card.free h4 {
+            color: #8b8d97;
+        }
+
+        .price-card.premium h4 {
+            color: #ffd700;
+        }
+
+        .price-card .desc {
+            font-size: 0.85rem;
+            color: #6b6d77;
+        }
+
+        /* ===== FOOTER ===== */
+        .page-footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #4a4c54;
+            font-size: 0.85rem;
+        }
+
+        .page-footer .keywords {
+            margin-top: 16px;
+            font-size: 0.75rem;
+            color: #2a2c34;
+        }
+
+        .header-icon {
+            width: 52px;
+            height: 52px;
+            vertical-align: middle;
+            margin-right: 12px;
+            border-radius: 10px;
         }
     </style>
 </head>
 
 <body>
 
-    <div class="container">
-        <header>
-            <h1>WarBot | WarUniverse</h1>
-            <p>En Gelişmiş Farm ve Toplama War Universe Botu</p>
+    <div class="page-container">
+        <!-- Header -->
+        <header class="page-header">
+            <h1><img src="demo/icon.png" alt="WarBot" class="header-icon">WarBot v0.8.1</h1>
+            <p>En Gelişmiş WarUniverse Otomasyon Botu</p>
         </header>
 
-        <div class="main-grid">
-            <div class="card">
-                <h3 style="color: var(--primary-red);"><i class="fas fa-shield-halved"></i> Güvenlik</h3>
-                <ul class="list-item">
-                    <li><i class="fas fa-check" style="color: var(--accent-green);"></i> Düşman Görünce Kaçış</li>
-                    <li><i class="fas fa-check" style="color: var(--accent-green);"></i> Otomatik Portal Çekme</li>
-                    <li><i class="fas fa-check" style="color: var(--accent-green);"></i> Düşük HP/Kalkan Koruması</li>
-                    <li><i class="fas fa-check" style="color: var(--accent-green);"></i> Akıllı Konfigürasyon</li>
-                </ul>
-            </div>
+        <!-- Main Layout -->
+        <div class="main-layout">
+            <!-- LEFT: Bot Demo -->
+            <div class="bot-demo-section">
+                <div class="demo-container">
+                    <!-- Header -->
+                    <div class="bot-header">
+                        <h1><img src="demo/icon.png" alt="" class="bot-icon">WarBot v0.8.1</h1>
+                        <span class="premium-badge">⭐ PREMIUM</span>
+                    </div>
 
-            <div class="card" style="padding: 10px; background: transparent; border: none;">
-                <div class="video-box">
-                    <iframe src="https://www.youtube.com/embed/ssl7Dlal4IU" frameborder="0" allowfullscreen></iframe>
+                    <!-- Tabs -->
+                    <div class="tabs">
+                        <button class="tab active" data-tab="tab-general">Genel</button>
+                        <button class="tab" data-tab="tab-collect">Toplama</button>
+                        <button class="tab" data-tab="tab-npc">NPC</button>
+                        <button class="tab" data-tab="tab-settings">Ayarlar</button>
+                        <button class="tab" data-tab="tab-stats">İstatistik</button>
+                        <button class="tab" data-tab="tab-license">Lisans</button>
+                    </div>
+
+                    <!-- TAB: GENEL -->
+                    <div id="tab-general" class="tab-content active">
+                        <div class="radar-container">
+                            <canvas id="radar-canvas"></canvas>
+                            <span class="radar-info">LIVE DEMO</span>
+                        </div>
+
+                        <div class="player-info">
+                            <div class="player-info-title">Oyuncu Bilgileri</div>
+                            <div class="player-row">
+                                <span class="nick">WarBot_Demo</span>
+                                <span class="separator">|</span>
+                                <span>Harita: <strong>E-1</strong></span>
+                                <span class="separator">|</span>
+                                <span>ID: <strong>123456</strong></span>
+                            </div>
+                            <div style="text-align: center;">
+                                <button id="config-toggle" class="config-btn">Config 1</button>
+                            </div>
+                        </div>
+
+                        <div class="bars-container">
+                            <div class="bar-row">
+                                <span class="bar-label">HP:</span>
+                                <div class="bar-track">
+                                    <div id="hp-bar" class="bar-fill hp" style="width: 85%"></div>
+                                </div>
+                                <span id="hp-value" class="bar-value">208.250 / 245.000</span>
+                            </div>
+                            <div class="bar-row">
+                                <span class="bar-label">Shield:</span>
+                                <div class="bar-track">
+                                    <div id="shield-bar" class="bar-fill shield" style="width: 72%"></div>
+                                </div>
+                                <span id="shield-value" class="bar-value">129.600 / 180.000</span>
+                            </div>
+                        </div>
+
+                        <div class="status-grid">
+                            <div class="status-item">
+                                <div class="status-label">Süre</div>
+                                <div class="status-value">02:45:32</div>
+                            </div>
+                            <div class="status-item">
+                                <div class="status-label">Çalışma</div>
+                                <div class="status-value">01:23:45</div>
+                            </div>
+                            <div class="status-item">
+                                <div class="status-label">BTC</div>
+                                <div class="status-value btc">1.245.780</div>
+                            </div>
+                            <div class="status-item">
+                                <div class="status-label">PLT</div>
+                                <div class="status-value plt">8.420</div>
+                            </div>
+                        </div>
+
+                        <div class="map-select-container">
+                            <label>Çalışma Haritası</label>
+                            <select class="map-select">
+                                <option>R-1</option>
+                                <option>R-2</option>
+                                <option selected>E-1</option>
+                                <option>E-2</option>
+                                <option>U-1</option>
+                            </select>
+                        </div>
+
+                        <div id="status-bar" class="status-bar">🟢 Bot Hazır</div>
+                    </div>
+
+                    <!-- TAB: TOPLAMA -->
+                    <div id="tab-collect" class="tab-content">
+                        <div class="checkbox-group">
+                            <div class="checkbox-group-title">Kutu Hedefleri</div>
+                            <div class="checkbox-item"><input type="checkbox" checked><label>Bonus Box</label></div>
+                            <div class="checkbox-item"><input type="checkbox" checked><label>Kargo Box</label></div>
+                            <div class="checkbox-item"><input type="checkbox"><label>Palladyum</label></div>
+                            <div class="checkbox-item green"><input type="checkbox" checked><label>🟢 Yeşil Kutu</label>
+                            </div>
+                            <div class="checkbox-item red"><input type="checkbox" checked><label>🎄 Christmas
+                                    Box</label></div>
+                        </div>
+                    </div>
+
+                    <!-- TAB: NPC -->
+                    <div id="tab-npc" class="tab-content">
+                        <div class="checkbox-group">
+                            <div class="checkbox-item red"><input type="checkbox" checked><label>⚔️ NPC Saldırı</label>
+                            </div>
+                        </div>
+                        <div class="radio-group">
+                            <div class="radio-group-title">Savaş Modu</div>
+                            <div class="radio-options">
+                                <label class="radio-option"><input type="radio" name="combat"> Stand</label>
+                                <label class="radio-option"><input type="radio" name="combat" checked> Orbit</label>
+                                <label class="radio-option"><input type="radio" name="combat"> Kite</label>
+                                <label class="radio-option"><input type="radio" name="combat"> Mixed</label>
+                                <label class="radio-option"><input type="radio" name="combat"> Portal</label>
+                            </div>
+                        </div>
+                        <div class="checkbox-group" style="margin-top:10px">
+                            <div class="checkbox-item"><input type="checkbox" checked><label>🔫 Otomatik Lazer
+                                    Değişimi</label></div>
+                        </div>
+                        <div class="npc-list">
+                            <div class="npc-item">
+                                <div class="npc-name">Hydro</div>
+                                <div class="npc-tiers">
+                                    <div class="npc-tier"><label><input type="checkbox" checked> Normal</label><select>
+                                            <option>X1</option>
+                                            <option selected>X2</option>
+                                        </select></div>
+                                    <div class="npc-tier"><label><input type="checkbox"> Hyper</label><select>
+                                            <option>X2</option>
+                                            <option selected>X3</option>
+                                        </select></div>
+                                    <div class="npc-tier"><label><input type="checkbox"> Ultra</label><select>
+                                            <option selected>X4</option>
+                                        </select></div>
+                                </div>
+                            </div>
+                            <div class="npc-item">
+                                <div class="npc-name">Jenta</div>
+                                <div class="npc-tiers">
+                                    <div class="npc-tier"><label><input type="checkbox" checked> Normal</label><select>
+                                            <option selected>X2</option>
+                                        </select></div>
+                                    <div class="npc-tier"><label><input type="checkbox" checked> Hyper</label><select>
+                                            <option selected>X3</option>
+                                        </select></div>
+                                    <div class="npc-tier"><label><input type="checkbox"> Ultra</label><select>
+                                            <option selected>X4</option>
+                                        </select></div>
+                                </div>
+                            </div>
+                            <div class="npc-item">
+                                <div class="npc-name">Mali</div>
+                                <div class="npc-tiers">
+                                    <div class="npc-tier"><label><input type="checkbox" checked> Normal</label><select>
+                                            <option selected>X2</option>
+                                        </select></div>
+                                    <div class="npc-tier"><label><input type="checkbox"> Hyper</label><select>
+                                            <option selected>X3</option>
+                                        </select></div>
+                                </div>
+                            </div>
+                            <div class="npc-item">
+                                <div class="npc-name">Plarion</div>
+                                <div class="npc-tiers">
+                                    <div class="npc-tier"><label><input type="checkbox" checked> Normal</label><select>
+                                            <option selected>X3</option>
+                                        </select></div>
+                                    <div class="npc-tier"><label><input type="checkbox" checked> Hyper</label><select>
+                                            <option selected>X4</option>
+                                        </select></div>
+                                </div>
+                            </div>
+                            <div class="npc-item">
+                                <div class="npc-name">Bangoliour</div>
+                                <div class="npc-tiers">
+                                    <div class="npc-tier"><label><input type="checkbox"> Normal</label><select>
+                                            <option selected>X4</option>
+                                        </select></div>
+                                    <div class="npc-tier"><label><input type="checkbox"> Hyper</label><select>
+                                            <option selected>X4</option>
+                                        </select></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TAB: AYARLAR -->
+                    <div id="tab-settings" class="tab-content">
+                        <!-- GÜVENLİK AYARLARI -->
+                        <div class="checkbox-group">
+                            <div class="checkbox-group-title">Güvenlik Ayarları</div>
+                            <div class="slider-group">
+                                <div class="slider-header"><span>HP Kaçış Limiti</span><span class="value">%30</span>
+                                </div>
+                                <input type="range" min="0" max="100" value="30">
+                            </div>
+                            <div class="checkbox-item"><input type="checkbox" checked><label>HP düşünce kaç</label>
+                            </div>
+                            <div class="slider-group" style="margin-top:8px">
+                                <div class="slider-header"><span>Shield Kaçış Limiti</span><span
+                                        class="value">%20</span></div>
+                                <input type="range" min="0" max="100" value="20">
+                            </div>
+                            <div class="checkbox-item"><input type="checkbox"><label>Shield düşünce kaç</label></div>
+                        </div>
+
+                        <!-- KONFİGÜRASYON -->
+                        <div class="checkbox-group" style="margin-top:10px">
+                            <div class="checkbox-group-title">Konfigürasyon</div>
+                            <div class="config-group">
+                                <span class="config-label">Kaçış Konfig:</span>
+                                <div class="config-options">
+                                    <label><input type="radio" name="flee" checked> 1</label>
+                                    <label><input type="radio" name="flee"> 2</label>
+                                </div>
+                            </div>
+                            <div class="config-group">
+                                <span class="config-label">Saldırı Konfig:</span>
+                                <div class="config-options">
+                                    <label><input type="radio" name="attack"> 1</label>
+                                    <label><input type="radio" name="attack" checked> 2</label>
+                                </div>
+                            </div>
+                            <div class="config-group">
+                                <span class="config-label">Gezinme Konfig:</span>
+                                <div class="config-options">
+                                    <label><input type="radio" name="roam" checked> 1</label>
+                                    <label><input type="radio" name="roam"> 2</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- DİĞER AYARLAR -->
+                        <div class="checkbox-group" style="margin-top:10px">
+                            <div class="checkbox-group-title">Diğer Ayarlar</div>
+                            <div class="checkbox-item"><input type="checkbox" checked><label>Otomatik Tamir</label>
+                            </div>
+                            <div class="checkbox-item"><input type="checkbox"><label>Otomatik Roket</label></div>
+                            <div class="setting-row">
+                                <span class="setting-label">Ölüm Limiti:</span>
+                                <input type="number" value="0" min="0" max="100" class="setting-input">
+                                <span class="setting-hint">(0 = devre dışı)</span>
+                            </div>
+                            <div class="setting-row">
+                                <span class="setting-label">Ölüm Bekleme:</span>
+                                <input type="number" value="0" min="0" max="60" class="setting-input">
+                                <span class="setting-hint">dakika</span>
+                            </div>
+                        </div>
+
+                        <!-- DÜŞMAN KAÇIŞ -->
+                        <div class="checkbox-group" style="margin-top:10px">
+                            <div class="checkbox-group-title">Düşman Kaçış</div>
+                            <div class="checkbox-item"><input type="checkbox" checked><label>Düşman görününce
+                                    kaç</label></div>
+                            <div class="setting-row">
+                                <span class="setting-label">Mesafe:</span>
+                                <input type="number" value="1500" min="500" max="3000" class="setting-input">
+                            </div>
+                            <div class="setting-row">
+                                <span class="setting-label">Kaçış Sonrası Bekleme:</span>
+                                <input type="number" value="30" min="5" max="300" class="setting-input">
+                                <span class="setting-hint">sn</span>
+                            </div>
+                        </div>
+
+                        <!-- DİL -->
+                        <div class="checkbox-group" style="margin-top:10px">
+                            <div class="checkbox-group-title">Dil / Language</div>
+                            <select class="map-select">
+                                <option selected>Türkçe</option>
+                                <option>English</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- TAB: İSTATİSTİK -->
+                    <div id="tab-stats" class="tab-content">
+                        <table class="stats-table">
+                            <thead>
+                                <tr>
+                                    <th>İstatistik</th>
+                                    <th>Kazanılan</th>
+                                    <th>Toplam</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Bitcoin</td>
+                                    <td class="stats-positive">+245.780</td>
+                                    <td class="stats-btc">1.245.780</td>
+                                </tr>
+                                <tr>
+                                    <td>Platinum</td>
+                                    <td class="stats-positive">+1.420</td>
+                                    <td class="stats-plt">8.420</td>
+                                </tr>
+                                <tr>
+                                    <td>Tecrübe</td>
+                                    <td class="stats-positive">+58.200</td>
+                                    <td>1.458.200</td>
+                                </tr>
+                                <tr>
+                                    <td>Seviye</td>
+                                    <td>-</td>
+                                    <td>18</td>
+                                </tr>
+                                <tr class="stats-separator">
+                                    <td colspan="3">— CEPHANE —</td>
+                                </tr>
+                                <tr>
+                                    <td>RLX-1</td>
+                                    <td>-</td>
+                                    <td>45.230</td>
+                                </tr>
+                                <tr>
+                                    <td>WLX-4</td>
+                                    <td>-</td>
+                                    <td>3.500</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- TAB: LİSANS -->
+                    <div id="tab-license" class="tab-content">
+                        <div class="license-info">
+                            <div class="license-row"><span class="license-label">Kullanıcı:</span><span
+                                    class="license-value">WarBot_Demo</span></div>
+                            <div class="license-row"><span class="license-label">Durum:</span><span
+                                    class="license-value premium">PREMIUM ✓</span></div>
+                            <div class="license-row"><span class="license-label">Bitiş:</span><span
+                                    class="license-value">31.12.2025</span></div>
+                        </div>
+                        <div class="checkbox-group">
+                            <div class="checkbox-group-title">Premium Özellikleri</div>
+                            <div style="font-size:12px;color:#8b8d97;line-height:1.8">
+                                ✅ Tüm haritalar<br>✅ Tüm kutu tipleri<br>✅ NPC kesme<br>✅ Gelişmiş güvenlik<br>✅ 7/24
+                                destek
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bottom -->
+                    <div class="bottom-actions">
+                        <button id="btn-start" class="btn-start off">BAŞLAT</button>
+                        <button class="btn-hide">GİZLE</button>
+                    </div>
                 </div>
             </div>
 
-            <div class="card">
-                <h3 style="color: var(--primary-blue);"><i class="fas fa-bolt"></i> Verimlilik</h3>
-                <ul class="list-item">
-                    <li><i class="fas fa-check" style="color: var(--accent-green);"></i> NPC Bazlı Cephane</li>
-                    <li><i class="fas fa-check" style="color: var(--accent-green);"></i> Otomatik Kutu Toplama</li>
-                    <li><i class="fas fa-check" style="color: var(--accent-green);"></i> 7/24 Farm Desteği</li>
-                    <li><i class="fas fa-check" style="color: var(--accent-green);"></i> Anlık BTC/PLT Takibi</li>
-                </ul>
-            </div>
+            <!-- RIGHT: Video + Features -->
+            <div class="right-section">
+                <!-- Video -->
+                <div class="video-section">
+                    <h2><i class="fab fa-youtube"></i> Bot Tanıtım Videosu</h2>
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/ssl7Dlal4IU" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen></iframe>
+                    </div>
+                </div>
 
-            <div class="cta-box">
-                <h2>Hemen Başlamak İçin Sunucumuza Katılın</h2>
-                <p>Ücretsiz Bonus Box toplayıcısını indirmek veya Premium lisans almak için:</p>
-                <br>
-                <a href="https://discord.com/invite/rfVUC4d5eK" target="_blank" class="discord-btn">
-                    <i class="fab fa-discord"></i> Discord Sunucusuna Katıl
-                </a>
+                <!-- Features Grid -->
+                <div class="features-section">
+                    <div class="feature-card security">
+                        <h3><i class="fas fa-shield-halved"></i> Güvenlik</h3>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check"></i> Düşman görünce otomatik kaçış</li>
+                            <li><i class="fas fa-check"></i> Portal çekme modu</li>
+                            <li><i class="fas fa-check"></i> HP/Shield koruması</li>
+                            <li><i class="fas fa-check"></i> Akıllı konfigürasyon</li>
+                        </ul>
+                    </div>
+
+                    <div class="feature-card efficiency">
+                        <h3><i class="fas fa-bolt"></i> Verimlilik</h3>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check"></i> NPC bazlı lazer seçimi</li>
+                            <li><i class="fas fa-check"></i> Otomatik kutu toplama</li>
+                            <li><i class="fas fa-check"></i> 7/24 kesintisiz farm</li>
+                            <li><i class="fas fa-check"></i> Anlık BTC/PLT takibi</li>
+                        </ul>
+                    </div>
+
+                    <div class="feature-card automation">
+                        <h3><i class="fas fa-gears"></i> Otomasyon</h3>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check"></i> Otomatik harita navigasyonu</li>
+                            <li><i class="fas fa-check"></i> Ölüm sonrası devam</li>
+                            <li><i class="fas fa-check"></i> Akıllı hedef seçimi</li>
+                            <li><i class="fas fa-check"></i> Canlı radar takibi</li>
+                        </ul>
+                    </div>
+
+                    <div class="feature-card premium">
+                        <h3><i class="fas fa-crown"></i> Premium</h3>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check"></i> Tüm haritalar açık</li>
+                            <li><i class="fas fa-check"></i> Sınırsız NPC kesme</li>
+                            <li><i class="fas fa-check"></i> Öncelikli destek</li>
+                            <li><i class="fas fa-check"></i> Yeni özellikler ilk sizde</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- CTA Section -->
+                <div class="cta-section">
+                    <h2>🚀 Hemen Başla!</h2>
+                    <p>Ücretsiz bonus box toplayıcısını indirmek veya Premium lisans almak için:</p>
+                    <div class="cta-buttons">
+                        <a href="https://discord.gg/rfVUC4d5eK" target="_blank" class="btn-discord">
+                            <i class="fab fa-discord"></i> Discord'a Katıl
+                        </a>
+                        <a href="https://warbot.space" target="_blank" class="btn-website">
+                            <i class="fas fa-globe"></i> warbot.space
+                        </a>
+                    </div>
+
+                    <div class="pricing-hint">
+                        <div class="price-card free">
+                            <h4>🆓 FREE</h4>
+                            <div class="desc">X1 haritalarda bonus box toplama</div>
+                        </div>
+                        <div class="price-card premium">
+                            <h4>⭐ PREMIUM</h4>
+                            <div class="desc">Tüm özellikler + NPC kesme</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="keywords">
-            WarUniverse Bot, WarUniverse Hile, WarUniverse Cheat, Otomatik Kutu Kesme, NPC Kasma, WarBot v0.8,
-            WarUniverse 2025, WarUniverse Script, Space MMO Bot, Space MMO Automation
-        </div>
+        <!-- Footer -->
+        <footer class="page-footer">
+            <p>© 2025 WarBot | WarUniverse Automation</p>
+            <div class="keywords">
+                WarUniverse Bot, WarUniverse Hile, WarUniverse Cheat, Otomatik Kutu Kesme, NPC Kasma,
+                WarBot 2025, Space MMO Bot, Space MMO Automation
+            </div>
+        </footer>
     </div>
 
+    <script src="demo/app.js"></script>
 </body>
 
 </html>
